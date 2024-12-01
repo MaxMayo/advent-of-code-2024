@@ -1,5 +1,6 @@
 package org.example;
 
+import lombok.Setter;
 import org.example.utils.AbstractDay;
 import org.junit.jupiter.api.*;
 
@@ -14,7 +15,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static java.lang.System.exit;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -32,12 +32,15 @@ public abstract class AbstractTest {
     protected final List<String> realList;
 
     protected final int expectedExampleOneResult;
-    protected final int expectedExampleTwoResult;
+    @Setter
+    protected int expectedExampleTwoResult = 0;
 
+    @Setter
     protected int partOneRealResult = 0;
+    @Setter
     protected int partTwoRealResult = 0;
 
-    public AbstractTest(int exampleOneResult, int exampleTwoResult) throws IOException, ClassNotFoundException {
+    public AbstractTest(int exampleOneResult) throws IOException, ClassNotFoundException {
         // get which day it is by looking at class name
         Pattern dayNumberPattern = Pattern.compile("Day(?<dayNumber>\\d+)Test");
         String className = this.getClass().getSimpleName();
@@ -61,9 +64,8 @@ public abstract class AbstractTest {
         this.exampleList = Collections.unmodifiableList(Files.readAllLines(exampleFilePath));
         this.realList = Collections.unmodifiableList(Files.readAllLines(realFilePath));
 
-        // set up
+        // Needed for first run. Others will be needed for their test runs.
         this.expectedExampleOneResult = exampleOneResult;
-        this.expectedExampleTwoResult = exampleTwoResult;
     }
 
     private AbstractDay getInstanceOfAbstractDay(List<String> lines) throws InvocationTargetException, InstantiationException, IllegalAccessException {
