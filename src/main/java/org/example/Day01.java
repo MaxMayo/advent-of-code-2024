@@ -1,61 +1,40 @@
 package org.example;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
+import org.example.utils.AbstractDay;
+
 import java.util.List;
 import java.util.PriorityQueue;
-import java.util.stream.Stream;
 
-public class Day01 {
+public class Day01 extends AbstractDay {
 
-    public int sum() throws IOException {
+    public Day01(List<String> lines) {
+        super(lines);
+    }
+
+    @Override
+    public int partOne() {
         PriorityQueue<Integer> left = new PriorityQueue<>();
         PriorityQueue<Integer> right = new PriorityQueue<>();
-        int count = 0;
 
-        Stream<String> lines = Files.lines(Path.of("src/main/resources/01/input.txt"));
-
-        lines.forEach(line -> {
-            String[] nums = line.split("\\s+");
-            left.add(Integer.parseInt(nums[0]));
-            right.add(Integer.parseInt(nums[1]));
-        });
-
-        count = left.size();
+        lines.stream()
+                .map(s -> s.split("\\s+"))
+                .forEach(array -> {
+                    left.add(Integer.parseInt(array[0]));
+                    right.add(Integer.parseInt(array[1]));
+                });
 
         int sum = 0;
-        for (int i = 0; i < count; i++) {
+        int size = left.size();
+        for (int i = 0; i < size; i++) {
             sum += Math.abs(left.poll() - right.poll());
         }
+
         return sum;
     }
 
-    public int sum2() throws IOException {
-        List<Integer> left = new ArrayList<>(), right = new ArrayList<>();
-        int count = 0;
-
-        Stream<String> lines = Files.lines(Path.of("src/main/resources/01/input.txt"));
-
-        lines.map(s -> s.split("\\s+"))
-                .forEach(pair -> {
-                    left.add(Integer.parseInt(pair[0]));
-                    right.add(Integer.parseInt(pair[1]));
-                });
-
-        count = left.size();
-        int sum = 0;
-
-        for (int i = 0; i < count; i++) {
-            int leftNum = left.get(i);
-            int timesInRight = (int) right.stream().filter(rightNum -> rightNum.equals(leftNum)).count();
-            sum += leftNum * timesInRight;
-        }
-
-        return sum;
+    @Override
+    public int partTwo() {
+        return 0;
     }
 
 }
