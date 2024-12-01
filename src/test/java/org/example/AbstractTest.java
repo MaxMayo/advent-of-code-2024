@@ -105,7 +105,7 @@ public abstract class AbstractTest {
     void testPartTwoReal() throws InvocationTargetException, InstantiationException, IllegalAccessException {
         var testedDay = getInstanceOfAbstractDay(realList);
         int result = testedDay.partTwo();
-        System.out.println("Result for part 1 real: " + result);
+        System.out.println("Result for part 2 real: " + result);
         assertEquals(partTwoRealResult, result);
     }
 }

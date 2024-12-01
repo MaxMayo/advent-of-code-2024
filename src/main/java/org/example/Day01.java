@@ -2,6 +2,8 @@ package org.example;
 
 import org.example.utils.AbstractDay;
 
+import java.sql.Array;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -34,7 +36,27 @@ public class Day01 extends AbstractDay {
 
     @Override
     public int partTwo() {
-        return 0;
+        List<Integer> left = new ArrayList();
+        List<Integer> right = new ArrayList();
+
+        lines.stream().map(
+                s -> s.split("\\s+")
+        ).forEach(array -> {
+           left.add(Integer.parseInt(array[0]));
+           right.add(Integer.parseInt(array[1]));
+        });
+
+        int size = left.size();
+        int sum = 0;
+        for (int i = 0; i < size; i++) {
+            int current = left.get(i);
+            sum += current * occurrencesInList(current, right);
+        }
+        return sum;
+    }
+
+    public static int occurrencesInList(int candidate, List<Integer> list) {
+        return (int) list.stream().filter(num -> num.equals(candidate)).count();
     }
 
 }
