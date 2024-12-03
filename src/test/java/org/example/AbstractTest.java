@@ -27,6 +27,9 @@ public abstract class AbstractTest {
     private final Path exampleFilePath;
     protected final List<String> exampleList;
 
+    private final Path exampleFilePath2;
+    protected final List<String> exampleList2;
+
     private static final Path realFileBasePath = Path.of("src/main/resources/");
     private final Path realFilePath;
     protected final List<String> realList;
@@ -58,10 +61,16 @@ public abstract class AbstractTest {
 
         // get input filepaths by day
         this.exampleFilePath = exampleFileBasePath.resolve(day + ".txt");
+        this.exampleFilePath2 = exampleFileBasePath.resolve(day + "_2.txt");
         this.realFilePath = realFileBasePath.resolve(day + ".txt");
 
         // load files to list on startup so problems are caught immediately and the proper code doesn't need to handle it
         this.exampleList = Collections.unmodifiableList(Files.readAllLines(exampleFilePath));
+        if(exampleFilePath2.toFile().exists()) {
+            this.exampleList2 = Collections.unmodifiableList(Files.readAllLines(exampleFilePath2));
+        } else {
+            this.exampleList2 = Collections.emptyList();
+        }
         this.realList = Collections.unmodifiableList(Files.readAllLines(realFilePath));
 
         // Needed for first run. Others will be needed for their test runs.
@@ -96,7 +105,8 @@ public abstract class AbstractTest {
     @DisplayName("Part Two: example")
     @Order(3)
     void testPartTwoExample() throws InvocationTargetException, InstantiationException, IllegalAccessException {
-        var testedDay = getInstanceOfAbstractDay(exampleList);
+        var myList = exampleList2.isEmpty() ? exampleList : exampleList2;
+        var testedDay = getInstanceOfAbstractDay(myList);
         int result = testedDay.partTwo();
         assertEquals(expectedExampleTwoResult, result);
     }
