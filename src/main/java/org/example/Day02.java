@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.utils.AbstractDay;
 
+import java.security.InvalidAlgorithmParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,23 @@ public class Day02 extends AbstractDay {
                     }
                     return integerList;
                 })
+                //works
                 .filter(level -> isSafe(level))
+                //experiment
+                .filter(report -> {
+                    try {
+                        return isNumVarianceWithinBounds(report);
+                    } catch (InvalidAlgorithmParameterException e) {
+                        return false;
+                    }
+                })
+                .filter(report -> {
+                    try {
+                        return areAllInSameDirection(report);
+                    } catch (InvalidReportException e) {
+                        return false;
+                    }
+                })
                 .count();
 
 
@@ -120,8 +137,50 @@ public class Day02 extends AbstractDay {
                 })
 //                .filter(level -> isSafeDampened(level, false, null))
 //                .filter(report -> reportFilter(report, false))
+                //works
                 .filter(this::brute)
                 .count();
+    }
+
+    private boolean isNumVarianceWithinBounds(List<Integer> record) throws InvalidAlgorithmParameterException {
+        boolean withinBounds = true;
+        for (int i = 0; i < record.size() - 1; i++) {
+            int variance = (Math.abs(record.get(i) - record.get(i + 1)));
+            if (variance > 3 || variance < 1)
+                throw new InvalidAlgorithmParameterException("Variance out of bounds: " + variance);
+        }
+        return true;
+    }
+
+    private boolean areAllInSameDirection(List<Integer> record) throws InvalidReportException {
+        boolean isUpwards;
+        int diff = record.get(1) - record.get(0);
+        if (diff > 0) {
+            isUpwards = true;
+        } else if (diff < 0) {
+            isUpwards = false;
+        } else {
+            throw new InvalidReportException("First two numbers are identical, can't/won't resolve direction");
+        }
+        for (int i = 0; i < record.size() - 1; i++) {
+            int current = record.get(i);
+            int next = record.get(i + 1);
+            int difference = next - current;
+            if (isUpwards) {
+                // goes down
+                if (difference < 0) throw new InvalidReportException("wrong direction");
+            } else {
+                // goes up
+                if (difference > 0) throw new InvalidReportException("wrong direction");
+            }
+        }
+        return true;
+    }
+
+    public class InvalidReportException extends Exception {
+        public InvalidReportException(String message) {
+            super(message);
+        }
     }
 
     private boolean brute(List<Integer> report) {

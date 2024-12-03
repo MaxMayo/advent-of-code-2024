@@ -10,6 +10,7 @@ public class Day02Test extends AbstractTest {
         super(2);
         setPartOneRealResult(213);
         setExpectedExampleTwoResult(4);
-//        setPartTwoRealResult();
+        setPartTwoRealResult(285);
     }
+
 }
