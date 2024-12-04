@@ -1,7 +1,10 @@
 package org.example;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.example.utils.AbstractDay;
 
 import java.util.List;
@@ -120,6 +123,68 @@ public class Day04 extends AbstractDay {
 
     @Override
     public int partTwo() {
+        var height = lines.size();
+        var width = lines.getFirst().length();
+        int totalWidth = height + width;
+
+        List<String> diagonalUp = new ArrayList<>();
+        List<String> diagonalDown = new ArrayList<>();
+
+        // diagonal up
+        for(int i = 0; i < height + width; i++) {
+            int startRow = Math.min(i, height-1);
+            int startColumn = Math.max(i-height, 0);
+            int finishRow = startColumn;
+            int finishColumn = startRow;
+            int row = startRow;
+            int column = startColumn;
+            StringBuilder sb = new StringBuilder();
+            while(row >= finishRow && column <= finishColumn) {
+                sb.append(lines.get(row).charAt(column));
+                row--;
+                column++;
+            }
+            if (i != height - 1) diagonalUp.add(sb.toString());
+        }
+
+        //diagonal down
+        for(int i = 0; i < height + width; i++) {
+            int startRow = Math.max(0, height - 1 - i);
+            int startColumn = Math.max(i - height, 0);
+            int finishRow = height - 1 - startColumn;
+            int finishColumn = height - startRow;
+            int row = startRow;
+            int column = startColumn;
+            StringBuilder sb = new StringBuilder();
+            while(row <= finishRow && column <= finishColumn) {
+                sb.append(lines.get(row).charAt(column));
+                row++;
+                column++;
+            }
+            if (i != height - 1) diagonalDown.add(sb.toString());
+        }
+
+        List<Point> aLocations = new ArrayList<>();
+
+        Pattern pattern = Pattern.compile("MAS|SAM");
+
+        // get locations of diagonally up
+        for (int i = 0; i < diagonalUp.size(); i++) {
+            Matcher matcher = pattern.matcher(diagonalUp.get(i));
+            while (matcher.find()) {
+                int aIndex = matcher.start() + 1;
+
+                int realX = Math.min(0, i - width);
+                int realY;
+
+                aLocations.add(new Point(matcher.start(), i));
+            }
+        }
+
+        for (int i = 0; i < diagonalDown.size(); i++) {
+
+        }
+
         return 0;
     }
 }
