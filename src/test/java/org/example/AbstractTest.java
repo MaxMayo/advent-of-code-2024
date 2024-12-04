@@ -2,7 +2,6 @@ package org.example;
 
 import lombok.Setter;
 import org.example.utils.AbstractDay;
-import org.junit.jupiter.api.*;
 
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -14,6 +13,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
