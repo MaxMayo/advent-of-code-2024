@@ -9,6 +9,6 @@ public class Day06Test extends AbstractTest {
         super(41);
         setPartOneRealResult(5030);
         setExpectedExampleTwoResult(6);
-        setPartTwoRealResult(-1);
+        setPartTwoRealResult(1928);
     }
 }
