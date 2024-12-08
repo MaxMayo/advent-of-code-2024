@@ -4,9 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.example.utils.AbstractDay;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class Day06 extends AbstractDay {
 
@@ -133,8 +131,50 @@ public class Day06 extends AbstractDay {
         return (int) visitedLocations.stream().distinct().count();
     }
 
+    private class LoopFoundException extends Exception{}
+
     @Override
     public int partTwo() {
-        return 0;
+        loadGrid();
+        Map<Location, List<Direction>> bumpedObstaclesAndDirections = new HashMap<>();
+
+        // for each candidate obstacle, count how many times a loop happens
+        int sum = 0;
+        for(int y = 0; y < grid.height; y++) {
+            for(int x = 0; x < grid.width; x++) {
+                loadGrid();
+                bumpedObstaclesAndDirections = new HashMap<>();
+                if(grid.theGrid[y][x] == '.') {
+                    grid.theGrid[y][x] = '#';
+                    try {
+                        Location currentLocation;
+                        Location nextLocation = grid.getGuardStart();
+                        Direction currentDirection = Direction.UP;
+                        while (grid.isWithinBounds(nextLocation)) {
+                            currentLocation = nextLocation;
+                            // look in direction (and 'bump') then rotate until clear
+                            while(grid.isObstacle(currentLocation.move(currentDirection))) {
+                                // if obstacle has been hit before from same direction
+                                Location obstacle = currentLocation.move(currentDirection);
+                                if(bumpedObstaclesAndDirections.containsKey(obstacle) &&
+                                        bumpedObstaclesAndDirections.get(obstacle).contains(currentDirection)) {
+                                    throw new LoopFoundException();
+                                }
+                                if(!bumpedObstaclesAndDirections.containsKey(obstacle)) {
+                                    bumpedObstaclesAndDirections.put(obstacle, new ArrayList<>());
+                                } else {
+                                    bumpedObstaclesAndDirections.get(obstacle).add(currentDirection);
+                                }
+                                currentDirection = currentDirection.rotateClockwise();
+                            }
+                            nextLocation = currentLocation.move(currentDirection);
+                        }
+                    } catch (LoopFoundException e) {
+                        sum += 1;
+                    }
+                }
+            }
+        }
+        return sum;
     }
 }
