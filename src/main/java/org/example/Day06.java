@@ -1,6 +1,7 @@
 package org.example;
 
 import lombok.Getter;
+import lombok.Setter;
 import org.example.utils.AbstractDay;
 
 import java.util.ArrayList;
@@ -22,6 +23,10 @@ public class Day06 extends AbstractDay {
             this.height = theGrid.length;
             this.width = theGrid[0].length;
         }
+
+        @Getter
+        @Setter
+        private Location guardStart;
 
         public boolean isObstacle(Location location) {
             try {
@@ -89,8 +94,7 @@ public class Day06 extends AbstractDay {
     private List<Location> visitedLocations;
     private Grid grid;
 
-    @Override
-    public int partOne() {
+    private void loadGrid() {
         int height = lines.size();
         int width = lines.get(0).length();
         int startx = -1;
@@ -103,12 +107,18 @@ public class Day06 extends AbstractDay {
             if (lines.get(i).contains("^")) {
                 startx = lines.get(i).indexOf('^');
                 starty = i;
+                grid.guardStart = new Location(startx, starty);
             }
         }
+    }
+
+    @Override
+    public int partOne() {
+        loadGrid();
 
         visitedLocations = new ArrayList<>();
         Location currentLocation;
-        Location nextLocation = new Location(startx, starty);
+        Location nextLocation = grid.getGuardStart();
         Direction currentDirection = Direction.UP;
         while (grid.isWithinBounds(nextLocation)) {
             currentLocation = nextLocation;
