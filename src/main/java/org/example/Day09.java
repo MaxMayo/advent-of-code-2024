@@ -155,10 +155,9 @@ public class Day09 extends AbstractDay {
         long sum = 0;
         for (int i = 0; i < finalDisc.size(); i++) {
             int fileId = finalDisc.get(i);
-            if (fileId == -1) {
-                return sum;
+            if (fileId != -1) {
+                sum += (fileId * i);
             }
-            sum += (fileId * i);
         }
         return sum;
     }
