@@ -12,8 +12,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class Day09Test extends AbstractTest {
     public Day09Test() throws IOException, ClassNotFoundException {
         super(1928L);
-//        setPartOneRealResult();
-//        setExpectedExampleTwoResult();
+        setPartOneRealResult(6331212425418L);
+        setExpectedExampleTwoResult(2858L);
 //        setPartTwoRealResult();
     }
 
