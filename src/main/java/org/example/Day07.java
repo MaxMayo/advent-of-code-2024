@@ -58,8 +58,34 @@ public class Day07 extends AbstractDay {
             .reduce(0L, Long::sum);
     }
 
+    public long numPossibleVariants2(Equation equation) {
+        long target = equation.testValue();
+        long numMatches = numVariantsFound2(target, equation.values().getFirst(), equation.values.size() - 2, equation.values());
+        return numMatches > 0 ? target : 0;
+    }
+
+    private long numVariantsFound2(long target, long currentValue, int depthRemaining, List<Long> values) {
+        if(depthRemaining == -1) {
+            if (currentValue == target) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+        int nextValueIndex = values.size() - depthRemaining - 1;
+        long nextValue = values.get(nextValueIndex);
+        long sum = 0;
+        sum += numVariantsFound2(target, currentValue + nextValue, depthRemaining - 1, values);
+        sum += numVariantsFound2(target, currentValue * nextValue, depthRemaining - 1, values);
+        sum += numVariantsFound2(target, Long.parseLong(String.valueOf(currentValue) + String.valueOf(nextValue)), depthRemaining - 1, values);
+        return sum;
+    }
+
     @Override
     public long partTwo() {
-        return 0;
+        return lines.stream()
+            .map(Equation::from)
+            .map(this::numPossibleVariants2)
+            .reduce(0L, Long::sum);
     }
 }
