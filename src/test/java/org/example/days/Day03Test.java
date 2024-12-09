@@ -1,14 +1,8 @@
 package org.example.days;
 
 import org.example.AbstractTest;
-import org.example.Day03;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

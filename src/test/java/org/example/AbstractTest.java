@@ -38,16 +38,16 @@ public abstract class AbstractTest {
     private final Path realFilePath;
     protected final List<String> realList;
 
-    protected final int expectedExampleOneResult;
+    protected final long expectedExampleOneResult;
     @Setter
-    protected int expectedExampleTwoResult = 0;
+    protected long expectedExampleTwoResult = 0;
 
     @Setter
-    protected int partOneRealResult = 0;
+    protected long partOneRealResult = 0;
     @Setter
-    protected int partTwoRealResult = 0;
+    protected long partTwoRealResult = 0;
 
-    public AbstractTest(int exampleOneResult) throws IOException, ClassNotFoundException {
+    public AbstractTest(long exampleOneResult) throws IOException, ClassNotFoundException {
         // get which day it is by looking at class name
         Pattern dayNumberPattern = Pattern.compile("Day(?<dayNumber>\\d+)Test");
         String className = this.getClass().getSimpleName();
@@ -91,7 +91,7 @@ public abstract class AbstractTest {
     @Order(1)
     void testPartOneExample() throws InvocationTargetException, InstantiationException, IllegalAccessException {
         var testedDay = getInstanceOfAbstractDay(exampleList);
-        int actualResult = testedDay.partOne();
+        long actualResult = testedDay.partOne();
         assertEquals(expectedExampleOneResult, actualResult);
     }
 
@@ -100,7 +100,7 @@ public abstract class AbstractTest {
     @Order(2)
     void testPartOneReal() throws InvocationTargetException, InstantiationException, IllegalAccessException {
         var testedDay = getInstanceOfAbstractDay(realList);
-        int actualResult = testedDay.partOne();
+        long actualResult = testedDay.partOne();
         System.out.println("Result for part 1 real: " + actualResult);
         assertEquals(partOneRealResult, actualResult);
     }
@@ -111,7 +111,7 @@ public abstract class AbstractTest {
     void testPartTwoExample() throws InvocationTargetException, InstantiationException, IllegalAccessException {
         var myList = exampleList2.isEmpty() ? exampleList : exampleList2;
         var testedDay = getInstanceOfAbstractDay(myList);
-        int result = testedDay.partTwo();
+        long result = testedDay.partTwo();
         assertEquals(expectedExampleTwoResult, result);
     }
 
@@ -120,7 +120,7 @@ public abstract class AbstractTest {
     @Order(4)
     void testPartTwoReal() throws InvocationTargetException, InstantiationException, IllegalAccessException {
         var testedDay = getInstanceOfAbstractDay(realList);
-        int result = testedDay.partTwo();
+        long result = testedDay.partTwo();
         System.out.println("Result for part 2 real: " + result);
         assertEquals(partTwoRealResult, result);
     }

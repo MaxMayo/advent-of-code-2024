@@ -111,7 +111,7 @@ public class Day06 extends AbstractDay {
     }
 
     @Override
-    public int partOne() {
+    public long partOne() {
         loadGrid();
 
         visitedLocations = new ArrayList<>();
@@ -134,7 +134,7 @@ public class Day06 extends AbstractDay {
     private class LoopFoundException extends Exception{}
 
     @Override
-    public int partTwo() {
+    public long partTwo() {
         loadGrid();
         Map<Location, List<Direction>> bumpedObstaclesAndDirections = new HashMap<>();
 

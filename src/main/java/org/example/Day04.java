@@ -2,7 +2,6 @@ package org.example;
 
 import java.awt.Point;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.example.utils.AbstractDay;
@@ -20,7 +19,7 @@ public class Day04 extends AbstractDay {
     //grid is square
 
     @Override
-    public int partOne() {
+    public long partOne() {
         var height = lines.size();
         var width = lines.getFirst().length();
 //        Grid grid = new Grid(width, height);
@@ -122,7 +121,7 @@ public class Day04 extends AbstractDay {
     }
 
     @Override
-    public int partTwo() {
+    public long partTwo() {
         var height = lines.size();
         var width = lines.getFirst().length();
         int totalWidth = height + width;

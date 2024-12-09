@@ -14,7 +14,7 @@ public class Day02 extends AbstractDay {
     }
 
     @Override
-    public int partOne() {
+    public long partOne() {
         return (int) lines.stream().map(s -> s.split("\\s"))
                 .map(stringArray -> {
                     List<Integer> integerList = new ArrayList<>();
@@ -126,7 +126,7 @@ public class Day02 extends AbstractDay {
     }
 
     @Override
-    public int partTwo() {
+    public long partTwo() {
         return (int) lines.stream().map(s -> s.split("\\s"))
                 .map(stringArray -> {
                     List<Integer> integerList = new ArrayList<>();

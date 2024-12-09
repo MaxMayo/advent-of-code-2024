@@ -5,7 +5,6 @@ import org.example.utils.AbstractDay;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class Day03 extends AbstractDay {
 
@@ -16,7 +15,7 @@ public class Day03 extends AbstractDay {
     private Pattern mulPattern = Pattern.compile("(mul\\((?<first>\\d{1,3}),(?<second>\\d{1,3})\\))");
 
     @Override
-    public int partOne() {
+    public long partOne() {
 
 //        return lines.stream()
 //                .map(mulPattern::matcher)
@@ -48,7 +47,7 @@ public class Day03 extends AbstractDay {
     }
 
     @Override
-    public int partTwo() {
+    public long partTwo() {
         String megaLine = String.join("\n", lines);
         megaLine = megaLine.replaceAll("\\s", "");
         String megaLineCleansed = megaLine.replaceAll("(?:don't\\(\\)).*?(?:do\\(\\))", "");

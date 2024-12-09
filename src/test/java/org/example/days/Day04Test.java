@@ -1,10 +1,8 @@
 package org.example.days;
 
 import org.example.AbstractTest;
-import org.example.Day04;
 
 import java.io.IOException;
-import java.util.List;
 
 
 public class Day04Test extends AbstractTest {

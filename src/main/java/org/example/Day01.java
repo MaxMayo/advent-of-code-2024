@@ -2,7 +2,6 @@ package org.example;
 
 import org.example.utils.AbstractDay;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -14,7 +13,7 @@ public class Day01 extends AbstractDay {
     }
 
     @Override
-    public int partOne() {
+    public long partOne() {
         PriorityQueue<Integer> left = new PriorityQueue<>();
         PriorityQueue<Integer> right = new PriorityQueue<>();
 
@@ -35,7 +34,7 @@ public class Day01 extends AbstractDay {
     }
 
     @Override
-    public int partTwo() {
+    public long partTwo() {
         List<Integer> left = new ArrayList();
         List<Integer> right = new ArrayList();
 

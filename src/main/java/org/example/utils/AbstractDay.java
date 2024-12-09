@@ -1,8 +1,6 @@
 package org.example.utils;
 
-import java.nio.file.Path;
 import java.util.List;
-import java.util.stream.Stream;
 
 public abstract class AbstractDay {
 
@@ -18,8 +16,8 @@ public abstract class AbstractDay {
         this.heldInstance = this;
     }
 
-    public abstract int partOne();
+    public abstract long partOne();
 
-    public abstract int partTwo();
+    public abstract long partTwo();
 
 }

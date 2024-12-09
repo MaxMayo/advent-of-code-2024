@@ -33,7 +33,7 @@ public class Day05 extends AbstractDay {
     }
 
     @Override
-    public int partOne() {
+    public long partOne() {
         List<Predicate> rules = new ArrayList<>();
         List<String> pagesList = new ArrayList<>();
 
@@ -67,7 +67,7 @@ public class Day05 extends AbstractDay {
     }
 
     @Override
-    public int partTwo() {
+    public long partTwo() {
         List<Predicate> rules = new ArrayList<>();
         List<String> pagesList = new ArrayList<>();
         List<String> reorderedLines = new ArrayList<>();
