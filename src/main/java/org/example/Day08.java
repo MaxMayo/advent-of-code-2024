@@ -41,6 +41,9 @@ public class Day08 extends AbstractDay {
             }
         }
 
+        // for each group of towers, find their antinodes. put them on a map if they fit.
+
+
 
         return 0;
     }
