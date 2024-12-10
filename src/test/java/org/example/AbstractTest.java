@@ -40,12 +40,12 @@ public abstract class AbstractTest {
 
     protected final long expectedExampleOneResult;
     @Setter
-    protected long expectedExampleTwoResult = 0;
+    protected long expectedExampleTwoResult = -1;
 
     @Setter
-    protected long partOneRealResult = 0;
+    protected long partOneRealResult = -1;
     @Setter
-    protected long partTwoRealResult = 0;
+    protected long partTwoRealResult = -1;
 
     public AbstractTest(long exampleOneResult) throws IOException, ClassNotFoundException {
         // get which day it is by looking at class name
