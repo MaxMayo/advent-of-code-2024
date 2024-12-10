@@ -124,66 +124,32 @@ public class Day04 extends AbstractDay {
     public long partTwo() {
         var height = lines.size();
         var width = lines.getFirst().length();
-        int totalWidth = height + width;
 
-        List<String> diagonalUp = new ArrayList<>();
-        List<String> diagonalDown = new ArrayList<>();
-
-        // diagonal up
-        for(int i = 0; i < height + width; i++) {
-            int startRow = Math.min(i, height-1);
-            int startColumn = Math.max(i-height, 0);
-            int finishRow = startColumn;
-            int finishColumn = startRow;
-            int row = startRow;
-            int column = startColumn;
-            StringBuilder sb = new StringBuilder();
-            while(row >= finishRow && column <= finishColumn) {
-                sb.append(lines.get(row).charAt(column));
-                row--;
-                column++;
-            }
-            if (i != height - 1) diagonalUp.add(sb.toString());
+        char[][] wordSearch = new char[height][width];
+        for(int i = 0; i < lines.size(); i++) {
+            wordSearch[i] = lines.get(i).toCharArray();
         }
-
-        //diagonal down
-        for(int i = 0; i < height + width; i++) {
-            int startRow = Math.max(0, height - 1 - i);
-            int startColumn = Math.max(i - height, 0);
-            int finishRow = height - 1 - startColumn;
-            int finishColumn = height - startRow;
-            int row = startRow;
-            int column = startColumn;
-            StringBuilder sb = new StringBuilder();
-            while(row <= finishRow && column <= finishColumn) {
-                sb.append(lines.get(row).charAt(column));
-                row++;
-                column++;
-            }
-            if (i != height - 1) diagonalDown.add(sb.toString());
-        }
-
-        List<Point> aLocations = new ArrayList<>();
 
         Pattern pattern = Pattern.compile("MAS|SAM");
+        int sum = 0;
+        for(int row = 1; row < height - 1; row++) {
+            for(int column = 1; column < width - 1; column++) {
+                if(wordSearch[row][column] != 'A') continue;
+                char upLeft = wordSearch[row-1][column-1];
+                char downRight = wordSearch[row+1][column+1];
+                String diagonalDown = upLeft + "A" + downRight;
+                Matcher diagonalDownMatcher = pattern.matcher(diagonalDown);
 
-        // get locations of diagonally up
-        for (int i = 0; i < diagonalUp.size(); i++) {
-            Matcher matcher = pattern.matcher(diagonalUp.get(i));
-            while (matcher.find()) {
-                int aIndex = matcher.start() + 1;
+                char downLeft = wordSearch[row-1][column+1];
+                char upRight = wordSearch[row+1][column-1];
+                String diagonalUp = downLeft + "A" + upRight;
+                Matcher diagonalUpMatcher = pattern.matcher(diagonalUp);
 
-                int realX = Math.min(0, i - width);
-                int realY;
-
-                aLocations.add(new Point(matcher.start(), i));
+                if (diagonalDownMatcher.matches() && diagonalUpMatcher.matches()) {
+                    sum += 1;
+                }
             }
         }
-
-        for (int i = 0; i < diagonalDown.size(); i++) {
-
-        }
-
-        return 0;
+        return sum;
     }
 }
